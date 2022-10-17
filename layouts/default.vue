@@ -14,6 +14,11 @@
 <script>
 export default {
   name: 'DefaultLayout',
+  head () {
+    return {
+      title: 'Тестовое задание'
+    }
+  },
   data () {
     return {
       fixed: false
