@@ -9,7 +9,7 @@
           <v-expansion-panel-content class="my-1">
             <v-form ref="form">
             <v-row justify="center" align="center" class="pt-4">
-              <v-col style="display: contents" class="text-h4">1</v-col>
+              <v-col style="display: contents" class="grey--text text--darken-1 text-h4">1</v-col>
               <v-col>
                 <v-select
                   v-model="selectedColumn"
@@ -19,7 +19,7 @@
                   hide-details
                 />
               </v-col>
-              <v-col style="display: contents" class="text-h4">2</v-col>
+              <v-col style="display: contents" class="grey--text text--darken-1 text-h4">2</v-col>
               <v-col>
                 <v-select
                   v-model="selectedCondition"
@@ -30,7 +30,7 @@
                   :disabled="!selectedColumn"
                 />
               </v-col>
-              <v-col style="display: contents" class="text-h4">3</v-col>
+              <v-col style="display: contents" class="grey--text text--darken-1 text-h4">3</v-col>
               <v-col>
                 <v-text-field
                   v-model="filterValue"
@@ -74,7 +74,7 @@
           </tbody>
         </template>
       </v-simple-table>
-      <v-pagination v-if="sourceArray.length > 10" v-model="page" :length="5" class="my-4" />
+      <v-pagination v-if="sourceArray.length > 10" v-model="page" :length="pages" class="my-4" />
     </v-col>
   </v-row>
 </template>
@@ -116,6 +116,9 @@ export default {
       } else {
         return ['Равно', 'Содержит', 'Больше', 'Меньше']
       }
+    },
+    pages () {
+      return Math.floor(this.sourceArray.length / 10)
     }
   },
   methods: {
@@ -126,7 +129,7 @@ export default {
       goFilter () {
         if (this.selectedColumn === 'Дата') {
           if (this.selectedCondition === 'Равно') {
-            this.sourceArray = this.sourceArray.filter(item => new Date(item.data) === new Date(this.filterValue))
+            this.sourceArray = this.sourceArray.filter(item => item.data === this.filterValue)
           } else if (this.selectedCondition === 'Больше') {
             this.sourceArray = this.sourceArray.filter(item => new Date(item.data) > new Date(this.filterValue))
           } else if (this.selectedCondition === 'Меньше') {
