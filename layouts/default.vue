@@ -14,15 +14,11 @@
 <script>
 export default {
   name: 'DefaultLayout',
-  head () {
-    return {
-      title: 'Тестовое задание'
-    }
-  },
-  data () {
-    return {
-      fixed: false
-    }
-  }
+  head: () => ({
+    title: 'Тестовое задание'
+  }),
+  data: () => ({
+    fixed: false
+  })
 }
 </script>

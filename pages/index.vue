@@ -66,7 +66,7 @@
           <tbody>
             <tr v-for="item in items" :key="item.index">
               <td class="text-left pl-2">{{ item.index + 1 }}</td>
-              <td class="text-left pl-2">{{ item.data }}</td>
+              <td class="text-left pl-2">{{ new Date(item.data).toLocaleDateString('ru') }}</td>
               <td class="text-left pl-2">{{ item.name }}</td>
               <td class="text-left pl-2">{{ item.amount }}</td>
               <td class="text-left pl-2">{{ item.distance }}</td>
@@ -83,22 +83,20 @@
 import * as data from '~/static/source.json'
 export default {
   name: 'IndexPage',
-  data () {
-    return {
-      sourceArray: [],
-      page: 1,
-      selectedColumn: '',
-      columns: ['Дата', 'Название', 'Количество', 'Расстояние'],
-      selectedCondition: '',
-      filterValue: '',
-      nameIcon: 'mdi-sort-reverse-variant',
-      amountIcon: 'mdi-sort-reverse-variant',
-      distanceIcon: 'mdi-sort-reverse-variant',
-      nameFlag: 0,
-      amountFlag: 0,
-      distanceFlag: 0
-    }
-  },
+  data: () => ({
+    sourceArray: [],
+    page: 1,
+    selectedColumn: '',
+    columns: ['Дата', 'Название', 'Количество', 'Расстояние'],
+    selectedCondition: '',
+    filterValue: '',
+    nameIcon: 'mdi-sort-reverse-variant',
+    amountIcon: 'mdi-sort-reverse-variant',
+    distanceIcon: 'mdi-sort-reverse-variant',
+    nameFlag: 0,
+    amountFlag: 0,
+    distanceFlag: 0
+  }),
   mounted () {
     this.sourceArray = data.items
   },
@@ -124,16 +122,19 @@ export default {
   methods: {
       resetFilter () {
         this.$refs.form.reset()
+        this.page = 1
         this.sourceArray = data.items
       },
       goFilter () {
         if (this.selectedColumn === 'Дата') {
+          const arr = this.filterValue.split('.')
+          const val = arr[2] + '-' + arr[1] + '-' + arr[0]
           if (this.selectedCondition === 'Равно') {
-            this.sourceArray = this.sourceArray.filter(item => item.data === this.filterValue)
+            this.sourceArray = this.sourceArray.filter(item => item.data === val)
           } else if (this.selectedCondition === 'Больше') {
-            this.sourceArray = this.sourceArray.filter(item => new Date(item.data) > new Date(this.filterValue))
+            this.sourceArray = this.sourceArray.filter(item => new Date(item.data) > new Date(val))
           } else if (this.selectedCondition === 'Меньше') {
-            this.sourceArray = this.sourceArray.filter(item => new Date(item.data) < new Date(this.filterValue))
+            this.sourceArray = this.sourceArray.filter(item => new Date(item.data) < new Date(val))
           }
         }
         if (this.selectedColumn === 'Название') {
