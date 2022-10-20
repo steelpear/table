@@ -74,7 +74,7 @@
           </tbody>
         </template>
       </v-simple-table>
-      <v-pagination v-if="sourceArray.length > 10" v-model="page" :length="pages" class="my-4" />
+      <v-pagination v-if="pages > 1" v-model="page" :length="pages" class="my-4" />
     </v-col>
   </v-row>
 </template>
@@ -122,8 +122,9 @@ export default {
         this.sourceArray = data.items
       },
       goFilter () {
+        this.sourceArray = data.items
         if (this.selectedColumn === 'Дата') {
-          const arr = this.filterValue.split('.')
+          const arr = this.filterValue.trim().split('.')
           const val = arr[2] + '-' + arr[1] + '-' + arr[0]
           if (this.selectedCondition === 'Равно') {
             this.sourceArray = this.sourceArray.filter(item => item.data === val)
