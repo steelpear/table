@@ -102,11 +102,7 @@ export default {
   },
   computed: {
     items () {
-      if (this.page === 1) { return this.sourceArray.slice(0, 10) }
-      else if (this.page === 2) { return this.sourceArray.slice(10, 20) }
-      else if (this.page === 3) { return this.sourceArray.slice(20, 30) }
-      else if (this.page === 4) { return this.sourceArray.slice(30, 40) }
-      else { return this.sourceArray.slice(40, 50) }
+      return this.sourceArray.slice((this.page * 10) - 10, this.page * 10)
     },
     conditions () {
       if (this.selectedColumn !== 'Название') {
